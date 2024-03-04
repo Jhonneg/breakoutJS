@@ -18,6 +18,7 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 let score = 0
+let lives = 3;
 
 let bricks:any= [];
 for (let c = 0; c < brickColumnCount; c++) {
@@ -42,9 +43,9 @@ function collisionDetection() {
           b.status = 0
           score++
           if (score === brickRowCount * brickColumnCount) {
-            document.querySelector('p').textContent = 'You won'
-            document.location.reload();
-            clearInterval(interval); // Needed for Chrome to end game
+            document.querySelector('p').textContent = 'You won, reload to play again'
+            draw()
+            clearInterval(interval); 
           }
         }
       }
@@ -87,6 +88,11 @@ function drawScore() {
   ctx.fillStyle = "#0095DD";
   ctx.fillText(`Score: ${score}`, 8, 20);
 }
+function drawLives() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
+}
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -94,6 +100,7 @@ function draw() {
   drawBall();
   drawPaddle();
   drawScore();
+  drawLives();
     collisionDetection();
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
         dx = -dx;
@@ -106,10 +113,17 @@ function draw() {
               dy = -dy;
           }
     } else {
-      alert("Game Over");
-      document.location.reload();
-          clearInterval(interval);
-          document.querySelector("button").disabled = false
+     lives--;
+if (!lives) {
+     document.querySelector('p')?.textContent = "Game over" 
+  clearInterval(interval); 
+  } else {
+    x = canvas.width / 2;
+    y = canvas.height - 30;
+    dx = 2;
+    dy = -2;
+    paddleX = (canvas.width - paddleWidth) / 2;
+}
     }
   }
 
@@ -153,3 +167,11 @@ document.querySelector("button").addEventListener("click", function () {
   this.disabled = true;
 })
 
+document.addEventListener("mousemove", mouseMoveHandler, false);
+
+function mouseMoveHandler(e:any) {
+  const relativeX = e.clientX - canvas.offsetLeft;
+  if (relativeX > 0 && relativeX < canvas.width) {
+    paddleX = relativeX - paddleWidth / 2;
+  }
+}
