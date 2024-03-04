@@ -30,16 +30,46 @@ function drawPaddle() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
+    drawPaddle();
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
         dx = -dx;
     }
-    if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
-        dy = -dy;
+    else if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+        if (x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+        } else {
+            alert('Game Over')
+            document.location.reload();
+            clearInterval(interval);
+        }
     }
+    
     x += dx;
     y += dy;
+    if (rightPressed) {
+      paddleX = Math.min(paddleX + 7, canvas.width - paddleWidth);
+    } else if (leftPressed) {
+      paddleX = Math.max(paddleX - 7, 0);
+    }
 }
 function startGame() {
+document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    function keyDownHandler(e) {
+      if (e.key === "Right" || e.key === "ArrowRight") {
+        rightPressed = true;
+      } else if (e.key === "Left" || e.key === "ArrowLeft") {
+        leftPressed = true;
+      }
+    }
+
+    function keyUpHandler(e) {
+      if (e.key === "Right" || e.key === "ArrowRight") {
+        rightPressed = false;
+      } else if (e.key === "Left" || e.key === "ArrowLeft") {
+        leftPressed = false;
+      }
+    }
   const interval = setInterval(draw, 10);
 }
 document.querySelector("button").addEventListener("click", function () {
