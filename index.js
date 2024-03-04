@@ -126,14 +126,16 @@ function startGame() {
     } else if (e.key === "Left" || e.key === "ArrowLeft") {
       leftPressed = false;
     }
-    if (e.key === 'Enter' && document.querySelector("button").disabled = false) {
-      startGame();
-      }
-      
-});
+  };
+const interval = setInterval(draw, 10);
   }
-  const interval = setInterval(draw, 10);
-}
+document.addEventListener("keydown", (event) => {
+  const Enter = event.key 
+  if (Enter === 'Enter') {
+    startGame();
+  }
+});
+
 document.querySelector("button").addEventListener("click", function () {
   startGame();
   this.disabled = true;
