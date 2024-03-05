@@ -40,8 +40,9 @@ function collisionDetection() {
                     b.status = 0;
                     score++;
                     if (score === brickRowCount * brickColumnCount) {
-                        document.querySelector('p').textContent = 'You won, reload to play again';
-                        draw();
+                        ctx.font = "16px Arial";
+                        ctx.fillStyle = "#0095DD";
+                        ctx.fillText('You won', canvas.width - 270, 190);
                         clearInterval(interval);
                     }
                 }
@@ -91,7 +92,6 @@ function drawLives() {
     ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 }
 function draw() {
-    var _a;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
     drawBall();
@@ -114,7 +114,9 @@ function draw() {
         else {
             lives--;
             if (!lives) {
-                (_a = document.querySelector('p')) === null || _a === void 0 ? void 0 : _a.textContent = "Game over";
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "#0095DD";
+                ctx.fillText('Game over', canvas.width - 270, 190);
                 clearInterval(interval);
             }
             else {
@@ -155,8 +157,8 @@ function startGame() {
         }
     }
     ;
-    const interval = setInterval(draw, 10);
 }
+const interval = setInterval(draw, 10);
 document.addEventListener("keydown", (event) => {
     const Enter = event.key;
     if (Enter === 'Enter') {
