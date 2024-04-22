@@ -2,4 +2,4 @@
 
 Breakout game in plain JS
 
-![breakout](https://s5.ezgif.com/tmp/ezgif-5-48111af738.gif)
+![breakout](https://github.com/Jhonneg/breakoutJS/blob/main/assets/Screencastfrom03-05-2024065208PM-ezgif.com-video-to-gif-converter.gif?raw=true)
